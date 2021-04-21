@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My RecyclerView App</string>
+    <string name="item_employee_photo">Item Employee Photo</string>
+    <string name="item_cat_photo">Item Cat Photo</string>
+</resources>
