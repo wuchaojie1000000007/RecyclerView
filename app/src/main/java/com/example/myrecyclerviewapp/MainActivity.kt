@@ -2,13 +2,25 @@ package com.example.myrecyclerviewapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecyclerviewapp.model.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val catAdapter by lazy { CatAdapter(layoutInflater, GlideImageLoader(this)) }
+    private val catAdapter by lazy {
+        CatAdapter(
+            layoutInflater,
+            GlideImageLoader(this),
+            object : CatAdapter.OnClickListener {
+                override fun onItemClick(cateData: CatUiModel) {
+                    showSelectionDialog(cateData)
+                }
+
+            }
+        )
+    }
     private val recyclerView: RecyclerView by lazy { findViewById(R.id.recycler_view) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +77,13 @@ class MainActivity : AppCompatActivity() {
 
             )
         )
+    }
+
+    private fun showSelectionDialog(catUiModel: CatUiModel) {
+        AlertDialog.Builder(this).setTitle("Agent selected")
+            .setMessage("You have selected agency ${catUiModel.name}")
+            .setPositiveButton("OK") { _, _ -> }
+            .show()
     }
 }
 
