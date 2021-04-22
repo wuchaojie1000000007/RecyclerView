@@ -2,6 +2,7 @@ package com.example.myrecyclerviewapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecyclerviewapp.ImageLoader
 import com.example.myrecyclerviewapp.R
@@ -21,10 +22,17 @@ class ListItemAdapter(
 ) : RecyclerView.Adapter<ListItemViewHolder>() {
 
     private val listData = mutableListOf<ListItemUiModel>()
+    val swipeToDeleteCallback = SwipeToDeleteCallback()
+
     fun setData(listData: List<ListItemUiModel>) {
         this.listData.clear()
         this.listData.addAll(listData)
         notifyDataSetChanged()
+    }
+
+    private fun removeItem(position: Int) {
+        listData.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     override fun getItemViewType(position: Int) = when (listData[position]) {
@@ -58,5 +66,35 @@ class ListItemAdapter(
 
     interface OnClickListener {
         fun onItemClick(cateData: CatUiModel)
+    }
+
+    inner class SwipeToDeleteCallback :
+        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ) = false
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ) = if (viewHolder is CatViewHolder) {
+            makeMovementFlags(
+                ItemTouchHelper.ACTION_STATE_IDLE,
+                ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+            ) or makeMovementFlags(
+                ItemTouchHelper.ACTION_STATE_DRAG,
+                ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+            )
+        } else {
+            0
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.adapterPosition
+            removeItem(position)
+        }
     }
 }

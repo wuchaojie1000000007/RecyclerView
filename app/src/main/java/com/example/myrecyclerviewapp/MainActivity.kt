@@ -3,6 +3,7 @@ package com.example.myrecyclerviewapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecyclerviewapp.adapter.ListItemAdapter
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.adapter = listItemsAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        val itemTouchHelper = ItemTouchHelper(listItemsAdapter.swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
         listItemsAdapter.setData(
             listOf(
