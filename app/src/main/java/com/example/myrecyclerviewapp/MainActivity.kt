@@ -5,15 +5,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myrecyclerviewapp.adapter.ListItemAdapter
 import com.example.myrecyclerviewapp.model.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val catAdapter by lazy {
-        CatAdapter(
+    private val listItemsAdapter by lazy {
+        ListItemAdapter(
             layoutInflater,
             GlideImageLoader(this),
-            object : CatAdapter.OnClickListener {
+            object : ListItemAdapter.OnClickListener {
                 override fun onItemClick(cateData: CatUiModel) {
                     showSelectionDialog(cateData)
                 }
@@ -27,54 +28,58 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView.adapter = catAdapter
+        recyclerView.adapter = listItemsAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        catAdapter.setData(
+        listItemsAdapter.setData(
             listOf(
-
-                CatUiModel(
-
-                    Gender.Male,
-
-                    CatBreed.BalineseJavanese,
-
-                    "Fred",
-
-                    "Silent and deadly",
-
-                    "https://cdn2.thecatapi.com/images/DBmIBhhyv.jpg"
-
+                ListItemUiModel.Title("Sleeper Agents"),
+                ListItemUiModel.Cat(
+                    CatUiModel(
+                        Gender.Male,
+                        CatBreed.ExoticShorthair,
+                        "Garvey",
+                        "Garvey is as a lazy, fat, and cynical orange cat.",
+                        "https://cdn2.thecatapi.com/images/FZpeiLi4n.jpg"
+                    )
                 ),
-
-                CatUiModel(
-
-                    Gender.Female,
-
-                    CatBreed.ExoticShorthair,
-
-                    "Wilma",
-
-                    "Cuddly assassin",
-
-                    "https://cdn2.thecatapi.com/images/KJF8fB_20.jpg"
-
+                ListItemUiModel.Cat(
+                    CatUiModel(
+                        Gender.Unknown,
+                        CatBreed.AmericanCurl,
+                        "Curious George",
+                        "Award winning investigator",
+                        "https://cdn2.thecatapi.com/images/vJB8rwfdX.jpg"
+                    )
                 ),
-
-                CatUiModel(
-
-                    Gender.Unknown,
-
-                    CatBreed.AmericanCurl,
-
-                    "Curious George",
-
-                    "Award winning investigator",
-
-                    "https://cdn2.thecatapi.com/images/vJB8rwfdX.jpg"
-
+                ListItemUiModel.Title("Active Agents"),
+                ListItemUiModel.Cat(
+                    CatUiModel(
+                        Gender.Male,
+                        CatBreed.BalineseJavanese,
+                        "Fred",
+                        "Silent and deadly",
+                        "https://cdn2.thecatapi.com/images/DBmIBhhyv.jpg"
+                    )
+                ),
+                ListItemUiModel.Cat(
+                    CatUiModel(
+                        Gender.Female,
+                        CatBreed.ExoticShorthair,
+                        "Wilma",
+                        "Cuddly assassin",
+                        "https://cdn2.thecatapi.com/images/KJF8fB_20.jpg"
+                    )
+                ),
+                ListItemUiModel.Cat(
+                    CatUiModel(
+                        Gender.Male,
+                        CatBreed.ExoticShorthair,
+                        "Tim",
+                        "Tim, AKA Jasper, is very energetic, determined yet somewhat... Slow.",
+                        "https://cdn2.thecatapi.com/images/y61B6bFCh.jpg"
+                    )
                 )
-
             )
         )
     }
