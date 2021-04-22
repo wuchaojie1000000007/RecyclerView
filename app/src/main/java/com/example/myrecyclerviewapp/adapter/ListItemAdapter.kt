@@ -35,6 +35,11 @@ class ListItemAdapter(
         notifyItemRemoved(position)
     }
 
+    fun addItem(position: Int, item:ListItemUiModel){
+        listData.add(position, item)
+        notifyItemInserted(position)
+    }
+
     override fun getItemViewType(position: Int) = when (listData[position]) {
         is ListItemUiModel.Title -> VIEW_TYPE_TITLE
         is ListItemUiModel.Cat -> VIEW_TYPE_CAT

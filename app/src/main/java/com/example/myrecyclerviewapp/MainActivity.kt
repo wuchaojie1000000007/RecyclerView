@@ -2,6 +2,8 @@ package com.example.myrecyclerviewapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
     private val recyclerView: RecyclerView by lazy { findViewById(R.id.recycler_view) }
+    private val addItemButton: View by lazy { findViewById(R.id.main_add_item_button) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +89,21 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         )
+
+        addItemButton.setOnClickListener {
+            listItemsAdapter.addItem(
+                1,
+                ListItemUiModel.Cat(
+                    CatUiModel(
+                        Gender.Female,
+                        CatBreed.BalineseJavanese,
+                        "Anonymous",
+                        "Unknown",
+                        "https://cdn2.thecatapi.com/images/zJkeHza2K.jpg"
+                    )
+                )
+            )
+        }
     }
 
     private fun showSelectionDialog(catUiModel: CatUiModel) {
@@ -95,7 +113,6 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 }
-
 
 
 
